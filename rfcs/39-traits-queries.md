@@ -59,7 +59,17 @@ These all operate on an "at least one" basis: `Without<&dyn OnCrit>` will filter
 
 ## Implementation strategy
 
-TODO: write me.
+All queryable trait impls will have to be registered with the world at some point. This can be done via the `Component` derive macro.
+
+```rust
+#[derive(Component)]
+#[register_impl(OnCrit)]
+struct Monster;
+// `register_impl` will also implement a marker trait for `Monster`,
+// which will cause a compile error if the user forgets to register an impl.
+```
+
+When a component is first added to a `World`, it will register all of its queryable trait impls with a registry. When querying for `dyn OnCrit`, the ECS will use this registry to find components implementing the trait and create trait objects for them.
 
 ## Drawbacks
 
