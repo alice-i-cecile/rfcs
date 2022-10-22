@@ -69,7 +69,9 @@ struct Monster;
 // which will cause a compile error if the user forgets to register an impl.
 ```
 
-When a component is first added to a `World`, it will register all of its queryable trait impls with a registry. When querying for `dyn OnCrit`, the ECS will use this registry to find components implementing the trait and create trait objects for them.
+When a component is first added to a `World`, it will register all of its queryable trait impls with a registry. Users will also have the option of manually registering trait impls via a method -- this is necessary when implementing a trait for a foreign type.
+
+When querying for `dyn OnCrit`, the ECS will use the registry to find components implementing the trait and create trait objects for them.
 
 ## Drawbacks
 
