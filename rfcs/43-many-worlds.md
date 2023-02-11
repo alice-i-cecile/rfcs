@@ -30,9 +30,9 @@ When you need to fully isolate entities from each other (or make sure logic does
 At this point, you should be familiar with the basics of both `Worlds` and `Schedules`.
 Your `App` can store any number of these, each corresponding to a particular `WorldLabel`.
 
-When the app runs, each `World` will run one tick its `Schedule` in parallel and then hits **synchronization point**. By default, each world only plan a **sync point** with `App`'s 
+When the app runs, each `World` will run one tick its `Schedule` and then hits **synchronization point**. All worlds run in parallel. By default, each world only plan a **sync point** with `App`'s 
 cross world event forwarder, which is used for handling cross world event and create new world, destroy a world. However, it's also possible to manually specify a **sync point** 
-between two worlds there are 3 types of synchronization, pull (i.e. `(&World, &mut World)`),
+between two worlds. There are 3 types of synchronization, pull (i.e. `(&World, &mut World)`),
 push (i.e. `(&mut World, &World)`) and both-way (i.e. `(&mut World, &mut World)`). Such **sync point** can be planned when we construct the `App` using builder, or initiated by one
 of the `World` in runtime.
 
@@ -71,7 +71,6 @@ App
    .add_sync_point(SyncPoint::new()
       .sync_between(WorldLabelOfA, WorldLabelOfB)
       .sync(SyncMode::TwoWay, |world_a: &mut World, world_b: &mut World| { ... })
-      
    )
    // OR: A and B will run as many iteration as they want, but after 1 seconds, the world that finish its tick earlier will 
    // wait for other world to finish and sync
@@ -91,6 +90,14 @@ App
       .after_duration(Duration::from_secs(1))
       .sync(SyncMode::Pull, |world_a: &mut World, world_b: &World| { ... })
    )
+   // OR: this is a sync point with LabelA, it will always run before LabelB if both of the sync point 
+   // are planned to run in the same time.
+   .add_sync_point(SyncPoint::new()
+      .sync_between(WorldLabelOfA, WorldLabelOfB)
+      .label("LabelA")
+      .sync(SyncMode::TwoWay, |world_a: &mut World, world_b: &mut World| { ... })
+      .run_before("LabelB")
+   )
 ```
 
 To initiate a sync within a `World`
@@ -99,7 +106,7 @@ To initiate a sync within a `World`
 fn sync_point(world_manager: AppCommands) {
    world_manager.pause();              // pause itself, waiting for the sync
    
-   // pause itself, and wait B finish current tick, then run the sync function
+   // OR: pause itself, and wait B finish current tick, then run the sync function
    world_manager.request_to_sync(WorldLabelOfB, SyncMode::Pull, |world_self: &mut World, world_b: &World| { ... }); 
 }
 ```
