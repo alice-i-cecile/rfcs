@@ -30,19 +30,103 @@ When you need to fully isolate entities from each other (or make sure logic does
 At this point, you should be familiar with the basics of both `Worlds` and `Schedules`.
 Your `App` can store any number of these, each corresponding to a particular `WorldLabel`.
 
-During each pass of the game loop, each schedule runs in parallel, modifying the world it is assigned to.
-These worlds are fully isolated: they cannot view or modify any other world, and stages progress independently across schedules.
-Then, the **global world** (which stores common, read-only data) is processed, and any systems in its schedule are run.
-Finally, at the end of each game loop, all of the worlds wait for a synchronization step, and apply any `AppCommands` that were sent.
+When the app runs, each `World` will run one tick its `Schedule` and then hits **synchronization point**. All worlds run in parallel. By default, each world only plan a **sync point** with `App`'s 
+cross world event forwarder, which is used for handling cross world event and create new world, destroy a world. However, it's also possible to manually specify a **sync point** 
+between two worlds. There are 3 types of synchronization, pull (i.e. `(&World, &mut World)`),
+push (i.e. `(&mut World, &World)`) and both-way (i.e. `(&mut World, &mut World)`). Such **sync point** can be planned when we construct the `App` using builder, or initiated by one
+of the `World` in runtime.
 
-`AppCommands` allow you to communicate between worlds in various fashions.
-You might:
+To send a cross-world event, or create a new world, or destroy itself,
+```rust
+// a system in one of the World
+fn sync_point(world_manager: AppCommands) {
+   world_manager.write_event(SomeEvent { a: 1, b: 2}, WorldLabelOfA);   // send event to a world
+   world_manager.broadcast_event(SomeEvent { a: 1, b: 2}); // broadcast a event, e.g. send event to all world
+   
+   world_manager.spawn_world(WorldLabelOfB);      // create a new world with the schedule same as it self
+   world_manager.duplicate_self(WorldLabelOfC);    // create a new world that is duplicate of itself (i.e. resource, entity, schedule)
+   world_manager.spawn_world_with_schedule(WorldLabelOfC, a_custom_schedule); // create a new world with a schedule
 
-- `spawn_world` or `despawn_world`, to create and manage new worlds
-- `add_schedule`, `clone_schedule`, `reassign_schedule` or `remove_schedule` to apply logic to these new worlds
-- `move_resource`, `send_other_world_command` or `send_other_world_event` to communicate between worlds
-- transfer entities between worlds with `move_entities` or `move_query`
-- update the value of global resources that are shared between worlds using `insert_global`
+   world_manager.destroy_world(WorldLabelOfD);       // destroy the world itself
+}
+```
+notice non of these operation a immediate, they only happens at the **sync point** (e.g. after one iteration of the game loop for this world). for cross world event, it also need to wait for the target world to encounter the **sync point**.
+
+To create a sync point between world when constructing the `App`
+```rust
+App
+   .spawn_world(WorldLabelOfA)
+   .spawn_world(WorldLabelOfB)
+   // run the sync function after world A run 10 iteration and world B run 3 iteration,
+   // this efficiently means world A and world B tick ratio is 10:3. for example, if B
+   // complete 3 iteration first, it will wait for A to complete 10 iteration before sync.
+   .add_sync_point(SyncPoint::new()
+      .sync_between(WorldLabelOfA, WorldLabelOfB)
+      .after_iteration_of(WorldLabelOfA, 10)
+      .after_iteration_of(WorldLabelOfB, 3)
+      .sync(SyncMode::Push, |world_a: &World, world_b: &mut World| { ... })
+
+   )
+   // OR: by default, it's equivalent to with .after_iteration_of(WorldLabelOfA, 1).after_iteration_of(WorldLabelOfB, 1)
+   .add_sync_point(SyncPoint::new()
+      .sync_between(WorldLabelOfA, WorldLabelOfB)
+      .sync(SyncMode::TwoWay, |world_a: &mut World, world_b: &mut World| { ... })
+   )
+   // OR: A and B will run as many iteration as they want, but after 1 seconds, the world that finish its tick earlier will 
+   // wait for other world to finish and sync
+   .add_sync_point(SyncPoint::new()
+      .sync_between(WorldLabelOfB, WorldLabelOfC)
+      .after_iteration_of(WorldLabelOfA, SyncIteration::UNLIMITED)
+      .after_iteration_of(WorldLabelOfB, SyncIteration::UNLIMITED)
+      .after_duration(Duration::from_secs(1))
+      .sync(SyncMode::Pull, |world_a: &mut World, world_b: &World| { ... })
+   )
+   // OR: A will only run 1 iteration in 1 seconds, B can run as many as it wants in 1 seconds, 
+   // and then they wait for 1 seconds to run the sync function
+   .add_sync_point(SyncPoint::new()
+      .sync_between(WorldLabelOfB, WorldLabelOfC)
+      .after_iteration_of(WorldLabelOfA, 1)
+      .after_iteration_of(WorldLabelOfB, SyncIteration::UNLIMITED)
+      .after_duration(Duration::from_secs(1))
+      .sync(SyncMode::Pull, |world_a: &mut World, world_b: &World| { ... })
+   )
+   // OR: this is a sync point with LabelA, it will always run before LabelB if both of the sync point 
+   // are planned to run in the same time.
+   .add_sync_point(SyncPoint::new()
+      .sync_between(WorldLabelOfA, WorldLabelOfB)
+      .label("LabelA")
+      .sync(SyncMode::TwoWay, |world_a: &mut World, world_b: &mut World| { ... })
+      .run_before("LabelB")
+   )
+```
+
+To initiate a sync within a `World`
+```rust
+// a system in one of the World
+fn sync_point(world_manager: AppCommands) {
+   world_manager.pause();              // pause itself, waiting for the sync
+   
+   // OR: pause itself, and wait B finish current tick, then run the sync function
+   world_manager.request_to_sync(WorldLabelOfB, SyncMode::Pull, |world_self: &mut World, world_b: &World| { ... }); 
+}
+```
+
+The order of execution for a **sync point**
+1. create new world (if exists)
+2. send all cross world event to event forwarder
+3. wait to run all planned sync functions with other worlds
+4. receive all cross world event from event forwarder
+5. destroy world itself (if commanded by app)
+
+Each world is fully isolated from others: they cannot view or modify any other world, and stages progress independently across schedules.
+
+Since we remove the idea of `App.update()` (as each world may update asynchronously, we also need to rework for `runner`), the new API for runner will be
+```rust
+App.add_init_runner(...) // run only once at beginning of app start
+   .add_runner_before(WorldLabelA, ...) // run before every tick of A
+   .add_runner_after(WorldLabelA, ...) // run after every tick of B
+   .add_loop_runner(...) // run a runner as fast as possible, loop regardless of other world situation
+```
 
 ### WorldLabels
 
@@ -518,5 +602,5 @@ For the most part, this is trivial to replicate externally: `App` is still very 
 5. More fair, responsive or customizable task pool strategies to better predict and balance work between worlds.
 6. Use of app commands to modify schedules, as explored in [bevy #2507](https://github.com/bevyengine/bevy/pull/2507).
    1. We could *maybe* even pause the app, and then modify the runner.
-7. Fallible `AppCommands` using the technology in [bevy #2241](https://github.com/bevyengine/bevy/pull/2241).
+7. Fallible `AppCommands` using the technology in [bevy #2241](https://github.,jcom/bevyengine/bevy/pull/2241).
 8. Worlds as a staging ground for scenes in a prefab workflow.
