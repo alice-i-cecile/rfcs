@@ -138,7 +138,7 @@ We think that a hands-on approach to review will lead to better outcomes for eve
 This time commitment (in addition to the transaction costs) are likely to scale proportionally with the amount of work for each bounty: hence, a proportional cut.
 By funding maintainers through the bounty program, we can align incentives for everyone, and ensure that work done this way
 
-## \[Optional\] Prior art
+## Prior art
 
 TODO.
 
@@ -149,6 +149,7 @@ TODO.
 3. What submission fee should we set?
 4. What percentage of overhead should the Bevy org ask for?
 
-## \[Optional\] Future possibilities
+## Future possibilities
 
-1. Using this project for 
+1. Submitting bounties for improvments to / the creation of third-party open source tools in the Bevy ecosystem.
+2. Making the underlying bounty infrastructure reusable for other open source projects.
