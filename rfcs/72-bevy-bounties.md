@@ -108,6 +108,15 @@ Adding a submission fee:
 - ensures that *some* funding exists for every submitted bounty
 - covers the maintainer time spent reviewing the initial submission
 
+### Why can bounties be funded by multiple sources?
+
+This increases complexity in our implementation: why not just have a single fixed price upon submission?
+
+There's two good reasons:
+
+1. Bounties may initially be underpriced, relative to the amount of work / frustration required to fix the problem. If a bounty sits unclaimed for too long, it should be possible for interested users to incentivize it further.
+2. The bounty program should be accessible to small donations. Individually, $5 or $10 may be justifiable for a hotly-awaited feature or particularly annoying bug, but that won't be enough to justify the overhead of the process or attract additional developers. By allowing them to pool their funds, we can ensure that they remain important stakeholders in all areas of Bevy's development.
+
 ### Why are bids confidential?
 
 In order to ensure that bounties are completed effectively and at a high quality level, it's important to evaluate the skills of the bidders.
