@@ -1,4 +1,4 @@
-# Feature Name: (fill me in with a unique ident, `my_awesome_feature`)
+# Feature Name: `bevy-bounties`
 
 ## Summary
 
