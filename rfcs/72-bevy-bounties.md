@@ -55,6 +55,7 @@ To keep everything running smoothly, the lifecycle of a **bounty** is carefully 
    3. Individuals, companies and ad-hoc teams may all submit bids for a project.
    4. Maintainers evaluate each candidate or team, ensuring that they have the expertise and available time to complete the bounty in a timely fashion.
    5. Every candidate will receive personal feedback from the maintainers, explaining why they did or did not receieve the bounty.
+   6. If a bounty is completed incidentally, the bounty will be awarded to whoever completed it, but they shall be gently chided for not putting in a bid. A repeated pattern of behavior that is consistent with an attempt to bypass the bidding process will result in disqualification for future payouts.
 5. Maintainers select a candidate from the **qualified bidders**, and assign them the bounty.
    1. Funds earned via the bounty program are publicly tracked.
    2. If multiple bidders are qualified, then the bounty is awarded to the bidder with the lowest earnings from this program within the last 12 months.
@@ -69,6 +70,7 @@ To keep everything running smoothly, the lifecycle of a **bounty** is carefully 
       2. Donated to the Bevy legal organization
       3. Put towards another bounty
       4. Donated to a charity of their choice
+   3. No matter who performs or completes the work in the bounty, the team that won the bid for the bounty will receive the payout. They may but are not required to voluntarily choose to expand their team and share the payout with other contributors who completed the work.
 8. If a milestone is more than 200% behind schedule (3 times the amount of time bid), it will automatically be marked as **failed**.
    1. Once a bounty has been failed, bids will be reopened.
    2. Bidders who failed a bounty will not be able to rebid on it, but may bid on other bounties in the future.
@@ -131,9 +133,30 @@ The proposed mechanism:
 3. Still allows maintainers and SMEs to ensure that bounties are only claimed by qualified appplicants, to reduce the rate of failure.
 4. Encourages broad participation and spreads out the financial benefits.
 
+### Why does the bounty get awarded to the team that won the bid, no matter who did the work?
+
+Ultimately, the point of the bounty program is to ensure that valuable work is completed and Bevy becomes better.
+Fairness, while valuable, is not the primary concern: ensuring that the development culture stays positive and collaborative is much more important.
+
+Consider the alternative, where a bounty is awarded to whoever completed the work, regardless of who won the bid.
+Then, an unscrupulous but talented contributor steps in, and puts together a fix before the original team has a chance.
+Does the maintainer team merge this PR, and give that contributor the money?
+The team may be counting on those funds, and this is incentivizing a toxic first-come-first-serve race to complete bounties.
+Or do we reject the PR out of hand, causing the work to be wasted entirely?
+
+Next, consider a much more common and innocent case where, after seeing an implementation, an alternative, higher quality alternative can be quickly be put together.
+Are the maintainers bound to merge the winning team's counterproposal instead?
+Do we rely on the helpful contributor to graciously share money (like they currently share credit) in an ad-hoc fashion?
+
+Or if an bounty team's proposal is dramatically altered and improved in the process of code review, are the reviewers entitled to a share of the bounty?
+
+By having clear rules that uphold the primacy of the bidding process, we can strengthen its legitimacy, disincentivize bad behavior and reduce conflict arising due to good-natured collaboration.
+Everyone wants to ensure that Bevy is the best it can be: we should be careful not to get in the way of that.
+
 ### Why does the Bevy legal organization deserve an overhead payout?
 
-We think that a hands-on approach to review will lead to better outcomes for everyone involved, but it requires a great deal of time and expertise for each bounty.
+We think that a hands-on approach to bounty reviews will lead to better outcomes for everyone involved, but it requires a great deal of time and expertise for each bounty.
+By incentivizing maintainers to participate in and steward the bounty process, we can make sure it continues to keep working smoothly.
 
 This time commitment (in addition to the transaction costs) are likely to scale proportionally with the amount of work for each bounty: hence, a proportional cut.
 By funding maintainers through the bounty program, we can align incentives for everyone, and ensure that work done this way
