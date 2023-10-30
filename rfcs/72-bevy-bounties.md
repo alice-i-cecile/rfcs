@@ -73,9 +73,10 @@ To keep everything running smoothly, the lifecycle of a **bounty** is carefully 
       3. Put towards another bounty
       4. Donated to a charity of their choice
    3. No matter who performs or completes the work in the bounty, the team that won the bid for the bounty will receive the payout. They may but are not required to voluntarily choose to expand their team and share the payout with other contributors who completed the work.
-8. If a milestone is more than 200% behind schedule (3 times the amount of time bid), it will automatically be marked as **failed**.
-   1. Once a bounty has been failed, bids will be reopened for any remaining milestones.
-   2. Bidders who failed a bounty will not be able to rebid on it, but may bid on other bounties in the future.
+8. Bounties can be **unassigned**, either voluntarily by the team responsible, or after severe time overruns.
+   1. If a milestone is more than 200% behind schedule (3 times the amount of time bid), it will automatically be unassigned.
+   2. Once a bounty has been unsassigned, bids will be reopened for any remaining milestones.
+   3. Bidders who failed to complete a bounty within the margin of time alloted will not be able to rebid on it, but may bid on other bounties in the future.
 
 ## Implementation strategy
 
