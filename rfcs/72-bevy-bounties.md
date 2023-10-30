@@ -192,7 +192,7 @@ There are three key arguments for giving in to not-invented-here syndrome in thi
 
 1. Every intermediary will take their own cut, reducing the money avialable to both bounty completers and the Bevy legal organization.
 2. We want to be able to control and tailor the process to Bevy's needs.
-3. Virtually all of the options here are precarious: what happens to the funds, our workflows and community traction when they shut down?
+3. Virtually all of the options here are precarious (see [this historical analysis](https://wiki.snowdrift.coop/market-research/history/software)): what happens to the funds, our workflows and community traction when they shut down?
 
 For example, two of the most prominent options are [Algora](https://www.oss.fund/algora/) and [BountySource](https://www.oss.fund/bounty-source/).
 Algora takes a 20% cut, and as of this writing, has only $74k of awarded bounties: not exactly a company that is likely to exist in its current form in 10 years.
