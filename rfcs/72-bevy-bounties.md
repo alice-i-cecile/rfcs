@@ -14,7 +14,7 @@ We *could* ask more aggressively for donations, but this is both unpleasant for 
 
 If you just love the project and want to see it continue to exist, it's easy enough to throw a few bucks a month as a recurring donation.
 But from a commercial perspective: why would they donate thousands of dollars a year without any tangible, specific return.
-[Sponsorship advertismenet](https://bevyengine.org/) is really nice, but community goodwill doesn't stand up particularly well to the scrutiny of accountants.
+The [small advertisments for the companies that sponsor us](https://bevyengine.org/) are a nice way for us to say thanks, but there's no specific, tangible benefit to the companies that donate.
 Sure, in the abstract this helps them avoid their critical dependency going unmaintained and improves development velocity and quality!
 
 But that's a [collective action problem](https://www.e-education.psu.edu/geog30/node/342): without tangible reasons to give Bevy money,
@@ -38,29 +38,34 @@ the legal organization exists to serve as a central point for project finances, 
 One of its key tasks is to run the **Bevy Bounty** program.
 This program connects users (commercial and hobbyist) who want to pay for improvements to Bevy, to the developers (paid maintainers or community members) who would like to make them, but can't tackle or prioritize them without more resources.
 
-To keep everything running smoothly, the lifecycle of a **bounty** is carefully administered by members of the legal organization:
+To keep everything running smoothly, the lifecycle of a **bounty** is carefully administered by **Bevy leadership** (maintainers, subject matter experts and employees of the Bevy legal organization):
 
 1. A bounty is **submitted for approval**, via a pull request to a repository.
    1. This is later rendered on a dedicated web UI on the bevyengine.org site.
    2. Bounties may be broken down into **milestones**, with seperate funds dedicated to each milestone, in order to split work.
-   3. There is a $50 non-refundable **submission fee** for each bounty. If a bounty accepted, this money is put towards the bounty itself.
-2. Maintainers and SMEs evaluate each bounty, ensuring that it is clear, actionable and something that would be good for Bevy as a whole.
-   1. Community member review is very welcome, but each bounty is automatically treated as controversial and subject to those review standards.
+2. Bevy leadership evaluates each bounty, ensuring that it is clear, actionable and something that would be good for Bevy as a whole.
+   1. Bounties follow the same rules for merging as controversial PRs; maintainers and relevant SMEs are required to sign off before they are accepted.
+   2. Community member review and feedback is very welcome!
 3. **Funds** are raised for the bounty, and are submitted to the Bevy legal organization for safekeeping in a seperate account.
-   1. Funds may be contributed by any number of individuals or organizations for the same bounty.
-   2. Funds are held in escrow until either the bounty is completed, or the maintainers decide that it should be cancelled.
-   3. Bounties can be **cancelled** by the maintainers if they no longer fit the project direction in a way that cannot be fixed by amending the bounty.
-   4. When this happens, all funds (other than the initial submission fee and any completed milestones) will be refunded for that bounty to the best of the maintainers' abilities.
+   1. Bounties are denominated in USD for conveneince.
+   2. Bounties have a minimum of a $50 reward.
+   3. Funds may be contributed by any number of individuals or organizations for the same bounty.
+   4. Funds are held in escrow until either the bounty is completed, or the maintainers decide that it should be cancelled.
+   5. Bounties can be **cancelled** by the maintainers if they no longer fit the project direction in a way that cannot be fixed by amending the bounty.
+   6. When this happens, all funds (other than the initial submission fee and any completed milestones) will be refunded for that bounty to the best of the maintainers' abilities.
 4. As soon as a bounty is **posted**, community members may submit confidential **bids** to the maintainers, vying for the project.
-   1. Bids stay open for 1 week following the first submitted bid. This deadline is publicly listed.
-   2. Each bid contains the estimated timeline for completion (broken down by milestones), and (optionally) a section for the background and expertise of the bidder.
-   3. Individuals, companies and ad-hoc teams may all submit bids for a project.
-   4. Maintainers evaluate each candidate or team, ensuring that they have the expertise and available time to complete the bounty in a timely fashion.
-   5. Every candidate will receive personal feedback from the maintainers, explaining why they did or did not receieve the bounty.
-   6. If a bounty is completed incidentally, the bounty will be awarded to whoever completed it, but they shall be gently chided for not putting in a bid. A repeated pattern of behavior that is consistent with an attempt to bypass the bidding process will result in disqualification for future payouts.
-5. Maintainers select a candidate from the **qualified bidders**, and assign them the bounty.
+   1. Once at least one bid has been submitted and judged qualified, a one week **countdown** begins.
+   2. This deadline is publicly listed, along with the number of applicants who have been vetted as qualified.
+   3. Each bid contains the estimated timeline for completion (broken down by milestones), and (optionally) a section for the background and expertise of the bidder.
+   4. Individuals, companies and ad-hoc teams may all submit bids for a project.
+   5. Maintainers evaluate each candidate or team, ensuring that they have the expertise and available time to complete the bounty in a timely fashion.
+   6. Every candidate will receive personal feedback from the maintainers, clearly and directly explaining why they did or did not receieve the bounty.
+   7. If a bounty is completed incidentally, the bounty will be awarded to whoever completed it, but they shall be gently chided for not putting in a bid. A repeated pattern of behavior that is consistent with an attempt to bypass the bidding process will result in disqualification for future payouts.
+5. At the end of the countdown period, Bevy leadership selects a candidate from the **qualified bidders**, and assigns them the bounty.
    1. Funds earned via the bounty program are publicly tracked.
    2. If multiple bidders are qualified, then the bounty is awarded to the bidder with the lowest earnings from this program within the last 12 months.
+      1. In the case of a tie, the choice is selected at random.
+      2. Earnings are accumulated regardless of what you chose to do with this money. This is a high-score system, not an accounting record!
    3. If no bidders are qualified, the bounty is reopened.
 6. Work starts on the bounty, and maintainers and SMEs evaluate its progress against the milestones in the bounty.
    1. Work must be completed to the existing standards of the Bevy project: high quality, correct, and useful, but often incremental.
@@ -73,10 +78,16 @@ To keep everything running smoothly, the lifecycle of a **bounty** is carefully 
       3. Put towards another bounty
       4. Donated to a charity of their choice
    3. No matter who performs or completes the work in the bounty, the team that won the bid for the bounty will receive the payout. They may but are not required to voluntarily choose to expand their team and share the payout with other contributors who completed the work.
-8. Bounties can be **unassigned**, either voluntarily by the team responsible, or after severe time overruns.
-   1. If a milestone is more than 200% behind schedule (3 times the amount of time bid), it will automatically be unassigned.
-   2. Once a bounty has been unsassigned, bids will be reopened for any remaining milestones.
-   3. Bidders who failed to complete a bounty within the margin of time alloted will not be able to rebid on it, but may bid on other bounties in the future.
+8. Bounties may be **amended** by mutual consent.
+   1. Only work that is not yet complete may be amended. Completed milestones may not be modified.
+   2. While amendments may be major, they should reflect the original spirit of the bounty to be respectful of the wishes of other funders.
+   3. Consent from the submitter, Bevy leadership and the assigned tream (if any) is required.
+9. Bounties can be **unassigned**, either voluntarily by the team responsible, or after severe time overruns.
+   1. At 100% behind schedule (2 times the amount of time bid), Bevy leadership will get an automated warning about the project.
+   2. If a milestone is more than 200% behind schedule (3 times the amount of time bid), it will automatically be unassigned.
+   3. This can be overridden by amending the bounty's deadline, although this should be rare.
+   4. Once a bounty has been unsassigned, bids will be reopened for any remaining milestones.
+   5. Bidders who failed to complete a bounty within the margin of time alloted will not be able to rebid on it, but may bid on other bounties in the future.
 
 ## Implementation strategy
 
@@ -110,7 +121,7 @@ This is very bad for the long-term community of Bevy itself: even when money is 
 
 By screening and helping to shape bounties, we can both ensure alignment and strengthen the proposal based on the inside view of how the engine and project works.
 
-### Why do bounties have a submission fee?
+### Why do bounties have a minimum funding?
 
 Bounties aren't issues: work and casual ideas should be tracked there.
 They should be used for work that is unusually important to the submitter, that they are willing to chip in to see completed.
@@ -118,7 +129,7 @@ They should be used for work that is unusually important to the submitter, that 
 Adding a submission fee:
 
 - encourages community members to focus on the problems and features they care about most
-- ensures that *some* funding exists for every submitted bounty
+- ensures that *some* funding exists for every submitted bounty, at a level suitable for very small fixes
 - covers the maintainer time spent reviewing the initial submission
 
 ### Why can bounties be funded by multiple sources?
@@ -139,11 +150,12 @@ The funders will be frustrated by the delays, and other bidders may grow resentf
 As a result, screening bidders based on their experience and expertise is a good way to match work with workers.
 In order for this to work effectively, maintainers and SMEs must be able to share their fully honest opinions about the capacity and skills of specific people.
 Doing this confidentially helps reduce hurt feelings and public embarassment, and encourages a safe environment for critical feedback.
+Simply avoiding critical feedback and conflict is a [recipe for disaster that harms transparency and breaks community trust](https://fasterthanli.me/articles/the-rustconf-keynote-fiasco-explained).
 
 While anonymity is generally valuable to reduce bias when evaluating these processes, specific histories of open source work within the Bevy ecosystem are incredibly relevant when evaluating bids.
 As a result, the bidder(s) identity must be known at the time of submission.
 
-### Why are bids given to the lowest-paid qualified bidder?
+### Why are bids given to the qualified bidder with the lowest total recent payouts?
 
 A central challenge in running a paid bounty program in open source is building and maintaining community and funder trust in the process.
 As a result, fairness and transparency *must* be prioritized.
@@ -152,7 +164,7 @@ The proposed mechanism:
 
 1. Does not encourage rushed first-come-first serve bids, but still lets work start relatively quickly.
 2. Fights nepotism, as it is objectively measurable, and has internal accountability between maintainers and SMEs.
-3. Still allows maintainers and SMEs to ensure that bounties are only claimed by qualified appplicants, to reduce the rate of failure.
+3. Still allows maintainers and SMEs to ensure that bounties are only claimed by qualified applicants, to reduce the rate of failure and help funnel people towards tasks that are appropriate for their current skills.
 4. Encourages broad participation and spreads out the financial benefits.
 
 ### Why does the bounty get awarded to the team that won the bid, no matter who did the work?
@@ -282,13 +294,11 @@ To summarize and respond to their insights:
 
 ## Unresolved questions
 
-1. Should we use a minimal funding threshold or submission fee?
-   1. Very similar, the only difference is "do you need to pay if your bounty is rejected"
-2. What, exactly, does the Bevy legal organization look like?
-3. How much should the submission fee be?
-4. What percentage of overhead should the Bevy org ask for?
-5. In terms of websites, APIs and bank accounts, how should the bounty process be implemented?
-6. How polished should our initial Bevy Bounties site be before we ship it?
+1. What, exactly, does the Bevy legal organization look like?
+2. How much should the submission fee be?
+3. What percentage of overhead should the Bevy org ask for?
+4. In terms of websites, APIs and bank accounts, how should the bounty process be implemented?
+5. How polished should our initial Bevy Bounties site be before we ship it?
 
 ## Future possibilities
 
