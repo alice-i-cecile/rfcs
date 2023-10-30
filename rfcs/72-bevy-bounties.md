@@ -48,7 +48,9 @@ To keep everything running smoothly, the lifecycle of a **bounty** is carefully 
    1. Community member review is very welcome, but each bounty is automatically treated as controversial and subject to those review standards.
 3. **Funds** are raised for the bounty, and are submitted to the Bevy legal organization for safekeeping in a seperate account.
    1. Funds may be contributed by any number of individuals or organizations for the same bounty.
-   2. Funds are held in escrow until either the bounty is completed, or the maintainers decide that is no longer suitable. If it cannot be amended, it is **cancelled**, and all funds (other than the initial submission fee) will be refunded for that bounty to the best of the maintainers' abilities.
+   2. Funds are held in escrow until either the bounty is completed, or the maintainers decide that it should be cancelled.
+   3. Bounties can be **cancelled** by the maintainers if they no longer fit the project direction in a way that cannot be fixed by amending the bounty.
+   4. When this happens, all funds (other than the initial submission fee and any completed milestones) will be refunded for that bounty to the best of the maintainers' abilities.
 4. As soon as a bounty is **posted**, community members may submit confidential **bids** to the maintainers, vying for the project.
    1. Bids stay open for 1 week following the first submitted bid. This deadline is publicly listed.
    2. Each bid contains the estimated timeline for completion (broken down by milestones), and (optionally) a section for the background and expertise of the bidder.
@@ -72,7 +74,7 @@ To keep everything running smoothly, the lifecycle of a **bounty** is carefully 
       4. Donated to a charity of their choice
    3. No matter who performs or completes the work in the bounty, the team that won the bid for the bounty will receive the payout. They may but are not required to voluntarily choose to expand their team and share the payout with other contributors who completed the work.
 8. If a milestone is more than 200% behind schedule (3 times the amount of time bid), it will automatically be marked as **failed**.
-   1. Once a bounty has been failed, bids will be reopened.
+   1. Once a bounty has been failed, bids will be reopened for any remaining milestones.
    2. Bidders who failed a bounty will not be able to rebid on it, but may bid on other bounties in the future.
 
 ## Implementation strategy
