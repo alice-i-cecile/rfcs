@@ -177,6 +177,7 @@ Everyone wants to ensure that Bevy is the best it can be: we should be careful n
 ### Why does the Bevy legal organization deserve an overhead payout?
 
 We think that a hands-on approach to bounty reviews will lead to better outcomes for everyone involved, but it requires a great deal of time and expertise for each bounty.
+Maintenance of code doesn't end when the first PR is merged either: every new feature requires ongoing resources to keep working as the code base changes around it.
 By incentivizing maintainers to participate in and steward the bounty process, we can make sure it continues to keep working smoothly.
 
 This time commitment (in addition to the transaction costs) are likely to scale proportionally with the amount of work for each bounty: hence, a proportional cut.
@@ -217,6 +218,37 @@ While the literature on RFPs often prescribes a more formal and rigid process th
 2. Make sure the bidding process is fair and transparent.
 3. Make sure that vendors (contributors in this case) are actually equipped to complete the request.
 4. Break the work to be completed into clear, actionable milestones.
+
+### Zig's criticisms of bounty programs in open source
+
+The [Zig team wrote a scathing critique of bounty programs](https://ziglang.org/news/bounties-damage-open-source-projects/) that's worth digging into.
+
+> - Bounties foster competition at the expense of cooperation.
+> - Bounties are an utterly simplistic way of dealing with the business management side of creating software:
+>   - Instead of scouting for a suitable candidate, you’re letting battle royale dynamics pick a winner for you, at the expense of everybody who’s going to lose the competition.
+>   - Instead of creating a clear contract where you take on some of the risk, you implicitly put the entirety of the risk on the contestants (eg partial solutions don’t get any payout).
+>   - Instead of allocating time and resources to proper due diligence, you instead penalize any form of thoughtfulness in favor of reckless action (eg a solution just needs to pass a test suite).
+>   - Instead of planning for the full lifecycle of software, which also includes maintenance, you end up with a quickly bitrotting artifact that is of no practical use to anybody.
+>   - Instead of spreading unease to all the people involved, it would be preferable you instead learned how to do business properly.
+> - On projects less radical than Zig, you might also put pressure on the development team to accept the winning submission, which, given the above, will probably not be the most well-thought-out and maintainable solution.
+
+As [discussed on HackerNews](https://news.ycombinator.com/item?id=37541994), the story that prompted this post is not as clear cut as "all bounties are bad".
+
+> You proposed a change to a repo you do not own. You offered an incentive to 3rd party developers to push PRs to that repo. You did not wait until the proposal was accepted. You thus required the community maintaining that repo to do extra review work on a feature they hadn't officially accepted yet. You were refused, and then offered the same incentives somewhere else, with the same drawbacks on the zig community.
+
+Similar experiences were shared, in the context of developing a game:
+
+> I have always been of the same opinion, which I formed years ago helping with Cataclysm: Dark Days Ahead development: "development by bounty" leads to inevitable "(un)designed by a whale", i.e. a few with cash to spend on such things enforcing whatever they *feel they will like* on everybody else. The notion of a coherent whole, whether it's a game or anything else, doesn't really go well with "voting with wallets".
+
+Unsurprisingly, "design by the richest" is a poor strategy.
+
+As discussed in the Rationale and Alternatives sectuib, this proposal is deliberately different from the situation created here in important ways:
+
+1. Bounties are carefully vetted and refined by project leadership.
+2. Bounties are assigned via a bidding process, rather than a first-come-first-serve process.
+3. Would-be bounty completers are vetted by project leadership to match the needs of a task with the skills available.
+4. Partial solutions get partial payout, via milestones and the ability to form ad hoc teams.
+5. A fraction of the bounties is allocated to the maintainers, to help cover administration, review and maintenance.
 
 ## Unresolved questions
 
