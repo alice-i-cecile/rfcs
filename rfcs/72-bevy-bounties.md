@@ -48,7 +48,7 @@ To keep everything running smoothly, the lifecycle of a **bounty** is carefully 
    1. Community member review is very welcome, but each bounty is automatically treated as controversial and subject to those review standards.
 3. **Funds** are raised for the bounty, and are submitted to the Bevy legal organization for safekeeping in a seperate account.
    1. Funds may be contributed by any number of individuals or organizations for the same bounty.
-   2. Funds are held in escrow until either the bounty is completed, or the maintainers decide that is no longer suitable. If it cannot be amended, all funds will be returned for that bounty.
+   2. Funds are held in escrow until either the bounty is completed, or the maintainers decide that is no longer suitable. If it cannot be amended, it is **cancelled**, and all funds (other than the initial submission fee) will be refunded for that bounty to the best of the maintainers' abilities.
 4. As soon as a bounty is **posted**, community members may submit confidential **bids** to the maintainers, vying for the project.
    1. Bids stay open for 1 week following the first submitted bid. This deadline is publicly listed.
    2. Each bid contains the estimated timeline for completion (broken down by milestones), and (optionally) a section for the background and expertise of the bidder.
@@ -59,12 +59,16 @@ To keep everything running smoothly, the lifecycle of a **bounty** is carefully 
    1. Funds earned via the bounty program are publicly tracked.
    2. If multiple bidders are qualified, then the bounty is awarded to the bidder with the lowest earnings from this program within the last 12 months.
    3. If no bidders are qualified, the bounty is reopened.
-6. Work starts on the bounty, and maintainers and SMEs evaluate its progress.
-   1. Work must be completed to the existing standards of the Bevy project: high quality, correct and useful, but not necessarily complete.
+6. Work starts on the bounty, and maintainers and SMEs evaluate its progress against the milestones in the bounty.
+   1. Work must be completed to the existing standards of the Bevy project: high quality, correct, and useful, but often incremental.
    2. Paid Bevy maintainers will prioritize review for bounty work, to ensure it progresses steadily.
 7. As milestones and bounties are completed, the Bevy legal organization pays out the earned funds to the **bounty completer(s)**.
    1. A fixed fraction (less than 50%, more than 5%) of the bounty is granted to the Bevy legal organization itself as **overhead**, funding the salaries of the paid maintainers and paying for administration of this program. All transaction fees are taken from the overhead.
-   2. The remaining funds are disbursed however the bounty completer chooses: directly to them via a payment method of their choice, donated to the Bevy legal organization, put towards another bounty or donated to another charity of their choice.
+   2. The remaining funds are disbursed however the bounty completer(s) chooses:
+      1. Directly to them via payment methods of their choice
+      2. Donated to the Bevy legal organization
+      3. Put towards another bounty
+      4. Donated to a charity of their choice
 8. If a milestone is more than 200% behind schedule (3 times the amount of time bid), it will automatically be marked as **failed**.
    1. Once a bounty has been failed, bids will be reopened.
    2. Bidders who failed a bounty will not be able to rebid on it, but may bid on other bounties in the future.
@@ -74,10 +78,6 @@ To keep everything running smoothly, the lifecycle of a **bounty** is carefully 
 ### The bounty program may be time-consuming to create and administer
 
 Creating the infrastructure, and then evaluating, shaping and helping out bounties will be a large project, both initially and on an ongoing basis.
-
-### Paid work may compete with open source work for the same feature
-
-TODO: Open vs closed bids for existing work in progress??
 
 ### The existence of a bounty program may change Bevy's priorities and direction
 
@@ -144,9 +144,10 @@ TODO.
 
 ## Unresolved questions
 
-1. Should we use a minimal funding or submission fee?
+1. Should we use a minimal funding threshold or submission fee?
+   1. Very similar, the only difference is "do you need to pay if your bounty is rejected"
 2. What, exactly, does the Bevy legal organization look like?
-3. What submission fee should we set?
+3. How much should the submission fee be?
 4. What percentage of overhead should the Bevy org ask for?
 
 ## Future possibilities
