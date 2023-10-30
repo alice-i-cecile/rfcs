@@ -179,6 +179,23 @@ By incentivizing maintainers to participate in and steward the bounty process, w
 This time commitment (in addition to the transaction costs) are likely to scale proportionally with the amount of work for each bounty: hence, a proportional cut.
 By funding maintainers through the bounty program, we can align incentives for everyone, and ensure that work done this way
 
+### Why should we build our own tools for this, rather than using an existing solution?
+
+This idea isn't novel: [various platforms](https://www.oss.fund/categories/bounties/) offer a premade solution, which packages up all of infrastructure needed to run a bounty program that works roughly like this.
+Referring to themselves as "crowdsourcing" or "open source bug bounty" platforms, they often focus on security issues, use cryptocurrency in a poorly-motivated fashion, and are young, VC-backed platforms.
+
+There are three key arguments for giving in to not-invented-here syndrome in this case:
+
+1. Every intermediary will take their own cut, reducing the money avialable to both bounty completers and the Bevy legal organization.
+2. We want to be able to control and tailor the process to Bevy's needs.
+3. Virtually all of the options here are precarious: what happens to the funds, our workflows and community traction when they shut down?
+
+For example, two of the most prominent options are [Algora](https://www.oss.fund/algora/) and [BountySource](https://www.oss.fund/bounty-source/).
+Algora takes a 20% cut, and as of this writing, has only $74k of awarded bounties: not exactly a company that is likely to exist in its current form in 10 years.
+BountySource's main app is, at the time of this writing, completely down, and many of the links in that list are completely dead, only a couple of years later.
+
+[HackerOne](https://www.oss.fund/hackerone/) appears to be the longest lived and most sustainable business, but it's very much focused on security features and does not support the workflows we need.
+
 ## Prior art
 
 [Bug bounty programs](https://en.wikipedia.org/wiki/Bug_bounty_program) are a long-standing tradition in software, traditionally funded by the company that makes the software to reward people who report high-priority vulnerabilities, crashes and critical logical flaws.
