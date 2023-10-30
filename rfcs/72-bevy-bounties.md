@@ -201,6 +201,9 @@ BountySource's main app is, at the time of this writing, completely down, and ma
 
 [HackerOne](https://www.oss.fund/hackerone/) appears to be the longest lived and most sustainable business, but it's very much focused on security features and does not support the workflows we need.
 
+[Snowdrift.coop](https://snowdrift.coop/) looks at first glance like a promising option: community-led, competently run and full of [great insights](https://wiki.snowdrift.coop/).
+However, they seem to be in alpha still and cannot be used for other projects, and it's not clear how active [ongoing development](https://gitlab.com/snowdrift/) is.
+
 ## Prior art
 
 [Bug bounty programs](https://en.wikipedia.org/wiki/Bug_bounty_program) are a long-standing tradition in software, traditionally funded by the company that makes the software to reward people who report high-priority vulnerabilities, crashes and critical logical flaws.
