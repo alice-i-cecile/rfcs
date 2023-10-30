@@ -250,6 +250,32 @@ As discussed in the Rationale and Alternatives sectuib, this proposal is deliber
 4. Partial solutions get partial payout, via milestones and the ability to form ad hoc teams.
 5. A fraction of the bounties is allocated to the maintainers, to help cover administration, review and maintenance.
 
+### FossFactory's analysis of bounty programs
+
+FossFactory, a semi-defunct FOSS bounty site, offers [their own analysis](https://www.fossfactory.org/why.php) of the problem space, and why so many other companies have tried and failed to build a marketplace.
+
+To summarize and respond to their insights:
+
+- First-come-first-serve is a terrible model, which encourages racing and disincentivizes collaboration.
+  - We firmly agree with this: this a recurring problem in this space and appears to be structural.
+- Exclusive project assignment via a bidding process (pioneered in 1999 by Cosource.com) does a good job to fix this.
+  - This is the model that Bevy's project is using.
+- Project assignment requires substantial project management overhead.
+  - This is expected, and why the Bevy legal organization takes an overhead fee on each bounty.
+- Project assignment must be fairly opaque, but then needs to be carefully managed for fairness and transparency.
+  - This is definitely a challenge.
+  - Clear, explicit processes and feedback go a long way.
+  - By requiring transparency within a vetted group of maintainers, we should be able to eliminate the worst forms of favoritism while allowing for open submissions.
+- Work within (open source) software projects is often stalled, infeasible or abandoned.
+  - Bevy definitely experiences this!
+  - This is why the proposal includes estimated timelines, and clear processes for dealing with failed and cancelled bounties.
+- Without the promise of exclusivity, raising funds can be challenging.
+  - So far, this has not been a concern. Many of the companies working with Bevy have been happy to contribute to or fund shared open source libraries.
+  - Only the core game (or other technology) generally remains proprietary: for the rest, reducing maintenance burden wins out over complete control and competitive exclusion.
+- Sponsors often want control over the details of the final product.
+  - By making Bevy leadership the intermediaries who have final say over both what's contained in a bounty, and when it is complete, we can remove this tension.
+  - Sponsors can continue to engage throughout the development process, but are not structurally privileged over other community members when doing so.
+
 ## Unresolved questions
 
 1. Should we use a minimal funding threshold or submission fee?
