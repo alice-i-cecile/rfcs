@@ -75,6 +75,15 @@ To keep everything running smoothly, the lifecycle of a **bounty** is carefully 
    1. Once a bounty has been failed, bids will be reopened.
    2. Bidders who failed a bounty will not be able to rebid on it, but may bid on other bounties in the future.
 
+### Implementation strategy
+
+If this proposal is accepted, we will need:
+
+1. A Bevy legal organization, capable of accepting and distributing funds in a trustworthy and legally-compliant way.
+2. A place for bounties to be submitted.
+3. A way for bounties to be publicized and tracked.
+4. Paid staff members of the Bevy legal organization to administer this process.
+
 ## Drawbacks
 
 ### The bounty program may be time-consuming to create and administer
@@ -172,7 +181,22 @@ By funding maintainers through the bounty program, we can align incentives for e
 
 ## Prior art
 
-TODO.
+[Bug bounty programs](https://en.wikipedia.org/wiki/Bug_bounty_program) are a long-standing tradition in software, traditionally funded by the company that makes the software to reward people who report high-priority vulnerabilities, crashes and critical logical flaws.
+However, what we're attempting here is something slightly different.
+Rather than being funded by the Bevy legal org itself, it is a mechanism for fundraising: we're just an intermediary for the market.
+And instead of being awarded to "any qualifying fix", specific requests are put out.
+
+Instead, this proposal is much closer to a [crowdfunded](https://www.bdc.ca/en/articles-tools/entrepreneur-toolkit/templates-business-guides/glossary/crowdfunding) [two-sided marketplace](https://en.wikipedia.org/wiki/Two-sided_market) for [procurement](https://en.wikipedia.org/wiki/Procurement) of Bevy development.
+Fortunately, we can avoid the classic chicken-and-egg problem of two-sided markets: due to the thriving open source nature of the project, there are plenty of users itching to pay for the features and fixes they need, and skilled contributors who would love an excuse to contribute more, dive into gnarly bugs and tackle bigger projects.
+Bevy would act as both a crowdfunding platform and a specialized [freelancing agency](https://en.wikipedia.org/wiki/Freelancer#Internet_and_online_marketplaces), pooling funds, promoting projects and providing [escrow services](https://en.wikipedia.org/wiki/Escrow) to reduce transactional costs and create a trusted place for funders and contributors to come together.
+
+Each bounty is an open [request for proposal](https://en.wikipedia.org/wiki/Request_for_proposal), driven by the needs of Bevy users and vetted and refined by the Bevy project.
+While the literature on RFPs often prescribes a more formal and rigid process than we need to follow here, there are a good lessons to learn:
+
+1. Use a standardized template that covers all of the important details to streamline the process.
+2. Make sure the bidding process is fair and transparent.
+3. Make sure that vendors (contributors in this case) are actually equipped to complete the request.
+4. Break the work to be completed into clear, actionable milestones.
 
 ## Unresolved questions
 
