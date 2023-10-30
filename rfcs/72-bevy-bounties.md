@@ -75,14 +75,15 @@ To keep everything running smoothly, the lifecycle of a **bounty** is carefully 
    1. Once a bounty has been failed, bids will be reopened.
    2. Bidders who failed a bounty will not be able to rebid on it, but may bid on other bounties in the future.
 
-### Implementation strategy
+## Implementation strategy
 
 If this proposal is accepted, we will need:
 
-1. A Bevy legal organization, capable of accepting and distributing funds in a trustworthy and legally-compliant way.
-2. A place for bounties to be submitted.
-3. A way for bounties to be publicized and tracked.
-4. Paid staff members of the Bevy legal organization to administer this process.
+1. A Bevy legal organization.
+2. Paid full or part-time staff members of the Bevy legal organization to administer this process.
+3. A place for bounties to be submitted.
+4. A way for bounties to be publicized and tracked.
+5. A mechanism for the Bevy legal organization to accepting and distribute funds in a trustworthy and legally-compliant way
 
 ## Drawbacks
 
@@ -222,6 +223,8 @@ While the literature on RFPs often prescribes a more formal and rigid process th
 2. What, exactly, does the Bevy legal organization look like?
 3. How much should the submission fee be?
 4. What percentage of overhead should the Bevy org ask for?
+5. In terms of websites, APIs and bank accounts, how should the bounty process be implemented?
+6. How polished should our initial Bevy Bounties site be before we ship it?
 
 ## Future possibilities
 
