@@ -53,7 +53,10 @@ To keep everything running smoothly, the lifecycle of a **bounty** is carefully 
    3. Funds may be contributed by any number of individuals or organizations for the same bounty.
    4. Funds are held in escrow until either the bounty is completed, or the maintainers decide that it should be cancelled.
    5. Bounties can be **cancelled** by the maintainers if they no longer fit the project direction in a way that cannot be fixed by amending the bounty.
-   6. When this happens, all funds (other than the initial submission fee and any completed milestones) will be refunded for that bounty to the best of the maintainers' abilities.
+   6. Bounties will **expire** one year after posting, cancelling them to avoid a backlog of uncompletable bounties.
+      1. Bounties will not expire while there is active bidding on them, or while they are being worked on.
+      2. This can be extended in six month increments by Bevy leadership, or by the bounty submitters with the consent of Bevy leadership.
+   7. When bounties are cancelled, all funds (other than the initial submission fee and any completed milestones) will be refunded for that bounty to the best of the maintainers' abilities.
 4. As soon as a bounty is **posted**, community members may submit confidential **bids** to the maintainers, vying for the project.
    1. Once at least one bid has been submitted and judged qualified, a one week **countdown** begins.
    2. This deadline is publicly listed, along with the number of applicants who have been vetted as qualified.
