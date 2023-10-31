@@ -37,6 +37,7 @@ the legal organization exists to serve as a central point for project finances, 
 
 One of its key tasks is to run the **Bevy Bounty** program.
 This program connects users (commercial and hobbyist) who want to pay for improvements to Bevy, to the developers (paid maintainers or community members) who would like to make them, but can't tackle or prioritize them without more resources.
+Bounties are submitted and funded by members of the community, vetted and polished by Bevy leadership, and then completed by Bevy contributors.
 
 To keep everything running smoothly, the lifecycle of a **bounty** is carefully administered by **Bevy leadership** (maintainers, subject matter experts and employees of the Bevy legal organization):
 
