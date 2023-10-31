@@ -68,10 +68,10 @@ To keep everything running smoothly, the lifecycle of a **bounty** is carefully 
       1. In the case of a tie, the choice is selected at random.
       2. Earnings are accumulated regardless of what you chose to do with this money. This is a high-score system, not an accounting record!
    3. If no bidders are qualified, the bounty is reopened.
-6. Work starts on the bounty, and maintainers and SMEs evaluate its progress against the milestones in the bounty.
+6. The chosen **bounty team** starts work starts on the bounty, and maintainers and SMEs evaluate its progress against the milestones in the bounty.
    1. Work must be completed to the existing standards of the Bevy project: high quality, correct, and useful, but often incremental.
    2. Paid Bevy maintainers will prioritize review for bounty work, to ensure it progresses steadily.
-7. As milestones and bounties are completed, the Bevy legal organization pays out the earned funds to the **bounty completer(s)**.
+7. As milestones and bounties are completed, the Bevy legal organization pays out the earned funds to the bounty team.
    1. A fixed fraction (less than 50%, more than 5%) of the bounty is granted to the Bevy legal organization itself as **overhead**, funding the salaries of the paid maintainers and paying for administration of this program. All transaction fees are taken from the overhead.
    2. The remaining funds are disbursed however the bounty completer(s) chooses:
       1. Directly to them via payment methods of their choice
