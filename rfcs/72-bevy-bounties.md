@@ -69,7 +69,8 @@ To keep everything running smoothly, the lifecycle of a **bounty** is carefully 
    1. Funds earned via the bounty program are publicly tracked.
    2. If multiple bidders are qualified, then the bounty is awarded to the bidder with the lowest earnings from this program within the last 12 months.
       1. In the case of a tie, the choice is selected at random.
-      2. Earnings are accumulated regardless of what you chose to do with this money. This is a high-score system, not an accounting record!
+      2. Earnings are split evenly across all members of a team, no matter how the funds are actually allocated at the end.
+      3. Earnings are accumulated regardless of what you chose to do with this money. This is a high-score system, not an accounting record!
    3. If no bidders are qualified, the bounty is reopened.
 6. The chosen **bounty team** starts work starts on the bounty, and maintainers and SMEs evaluate its progress against the milestones in the bounty.
    1. Work must be completed to the existing standards of the Bevy project: high quality, correct, and useful, but often incremental.
@@ -81,7 +82,11 @@ To keep everything running smoothly, the lifecycle of a **bounty** is carefully 
       2. Donated to the Bevy legal organization
       3. Put towards another bounty
       4. Donated to a charity of their choice
-   3. No matter who performs or completes the work in the bounty, the team that won the bid for the bounty will receive the payout. They may but are not required to voluntarily choose to expand their team and share the payout with other contributors who completed the work.
+   3. How the funds are split is private information. However, the Bevy legal org may publish aggregated information about the choices made.
+   4. If the team cannot come to an agreement on how the funds are distributed, they will be distributed evenly, with each team member able to decide independently what they want to do with their share.
+   5. If we cannot contact the bounty team to determine how to pay them (after a good faith effort), the funds shall go to the Bevy legal org.
+      1. If Bevy leadership is contacted within a year of the bounty's completion, we will retroactively distribute the earned funds to the bounty team.
+   6. No matter who performs or completes the work in the bounty, the team that won the bid for the bounty will receive the payout. They may but are not required to voluntarily choose to expand their team and share the payout with other contributors who completed the work.
 8. Bounties may be **amended** by mutual consent.
    1. Only work that is not yet complete may be amended. Completed milestones may not be modified.
    2. While amendments may be major, they should reflect the original spirit of the bounty to be respectful of the wishes of other funders.
@@ -303,6 +308,9 @@ To summarize and respond to their insights:
 3. What percentage of overhead should the Bevy org ask for?
 4. In terms of websites, APIs and bank accounts, how should the bounty process be implemented?
 5. How polished should our initial Bevy Bounties site be before we ship it?
+6. How do bounties fit in with the existing RFC process?
+   1. Should the RFC process continue to exist?
+7. If the Bevy legal org donates funds to charity on behalf of a bounty team, can or should they claim a charitable donation credit?
 
 ## Future possibilities
 
