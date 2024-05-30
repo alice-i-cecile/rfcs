@@ -116,6 +116,7 @@ pub trait DevCommand : Command + FromReflect + Reflect + Typed {
                 };
                 commands.add(typed_self);
             })
+
         }
     }
 }
@@ -161,8 +162,10 @@ In order to facilitate the creation of toolboxes, Bevy provides the `DevTool` tr
 pub trait DevTool : Reflect + FromReflect + GetTypeRegistration  {}
 ```
 
+
 Dev tools are registered via `app.register_toggable_dev_tool::<D : DevTool + Toggable>()` (for registrating default commands to manipulate DevTools: Enable<D>, Disable<D>, SetTool<D>, SetField<D>).
 This adds them as a resource (just like the familiar `.init_resource` or `insert_resource`), but also registers their `ComponentId` with the central `TypeRegistry`, which can be consumed by toolboxes to get a list of the available dev tools.
+
 
 To build your own dev tool, simply create a configuration resource, implement the `DevTool` trait, and then register it in the app when the correct feature flag is enabled.
 
@@ -219,6 +222,7 @@ If dev tool was registered with `app.register_toggable_dev_tool::<D : DevTool + 
 
 We know, that this little command set can be used for creating Quake-like consoles, for example. (You can see example in [PR](https://github.com/bevyengine/bevy/pull/13582#issuecomment-2140830848))
 
+
 ### Conventions for building dev tools
 
 Not everything can or should be defined by a trait! To supplement the `DevTool` trait, we recommend that Bevy and its ecosystem follow the following conventions:
@@ -244,11 +248,11 @@ Our first task is getting the list of dev tools.
 #[derive(Event)]
 struct ListDevTools;
 
-fn list_dev_tools(mut event_reader: EventReader<ListDevTools>, dev_tools_registry: Res<DevToolsRegistry>){
+fn list_dev_tools(mut event_reader: EventReader<ListDevTools>, type_registry: Res<AppTypeRegistry>){
     // Clear the events, and act if at least one is found
     if event_reader.drain().next().is_some() {
         println!("Available modal dev tools:");
-        for (_component_id, modal_dev_tool) in dev_tools_registry.iter_modal_dev_tools() {
+        for (_component_id, modal_dev_tool) in type_registry.iter_with_data::<ReflectModalDevTool>() {
             println!("{}", modal_dev_tool.type_name());
             println!("{}", modal_dev_tool.docs());
 
@@ -274,8 +278,10 @@ Next, we want to be able to configure modal dev tools at run time.
 commands.add(SetTool<SomeDevTool> { value: ron::from_str(tool_text_description).unwrap()});
 ```
 
+
 Finally, we want to be able to pass in a user supplied string, parse it into a dev command and then evaluate it on the world.
 
+todo: how can this use type registry?
 ```rust
 let registry = app_registry.read();
 let des = CliDeserializer::from_str(text.as_str(), &registry).unwrap();
@@ -303,6 +309,159 @@ if let Ok(boxed_cmd) = refl_des.deserialize(des) {
 While a number of other features could sensibly be added to this API (a `--help` flag, saving and loading config to disk, managing compatibility between dev tools),
 this MVP should be sufficient to prove out the viability of the core architecture.
 
+Another valuable approach we can undertake involves constructing a comprehensive Command Line Interface (CLI) interface utilizing the capabilities of the Reflect trait. A Command Line Interface (CLI) serves as a text-based gateway through which users can interact with computer systems or software by issuing commands via a terminal or console. In a typical CLI command structure, elements are organized as follows:
+
+```bash
+command_name arg0 arg1 arg2  --named-arg4 value --named-arg5 value
+| command  | positional args|         named args                  |
+```
+
+- `command_name` represents the name of the command being executed.
+- `arg0`, `arg1`, and `arg2` are positional arguments, which are required parameters specified in a particular order.
+- `--named-arg4 value` and `--named-arg5 value` are named arguments or options, preceded by `--` and followed by their respective values, separated by a space.
+
+This structure enables users to provide the necessary information and instructions to the game through typed commands.
+
+For example, setting 999 gold using the SetGold command in CLI style could look like this:
+
+```bash
+SetGold 999
+or
+SetGold --amount 999
+```
+
+Similarly, changing the turn\_speed in FlyDevCamera can be done with this command:
+
+```bash
+FlyDevCamera --turn_speed Some(0.5)
+```
+
+Thus, to implement the CLI interface, we need to do three things:
+
+1. be able to set the value of a command structure field by its name
+2. be able to set the value of a command structure field by its sequence number
+3. be able to convert strings into field values
+
+Reflect trait allows to retrieve by sequence number for all data types in rust (Struct, TupleStruct, List, etc). For example:
+
+```rust
+let field = match command.reflect_mut() {
+    bevy::reflect::ReflectMut::Struct(r) => {
+        let Some(field) = r.field_at_mut(idx) else {
+            error!("Invalid index: {}", idx);
+            return Err(DevToolParseError::InvalidToolData);
+        };
+        field
+    },
+    ...
+```
+
+And also Reflect trait allows you to get fields by their name for Strut and Enum. Example
+
+```rust
+ let field = match command.reflect_mut() {
+    bevy::reflect::ReflectMut::Struct(r) => {
+        let Some(field) = r.field_mut(name) else {
+            error!("Invalid name: {}", name);
+            return Err(DevToolParseError::InvalidToolData);
+        };
+        field
+    },
+    ...
+```
+
+With the ability to set separate values for DevCommand and ModalDevTool we can build a simple CLI parser with minimal code
+
+```rust
+fn parse_reflect_from_cli(&self, words: Vec<&str>, target: &mut Box<dyn Reflect>) -> Result<(), DevToolParseError> {
+    // The current named parameter being parsed
+    let mut named_param = None;
+    // Whether or not we are currently in named style
+    let mut is_named_style = false;
+    // Index of the next parameter to expect in positional style
+    let mut idx = 0;
+    
+    // Parse all words following the command name
+    for word in words.iter().skip(1) {
+        // Named style parameter
+        if word.starts_with("--") {
+            is_named_style = true;
+            named_param = Some(word.trim_start_matches("--").to_string());
+        } else {
+            // Positional style parameter
+    
+            // Get the field to apply the value to
+            if is_named_style {
+                // Retrieve the named parameter
+                let Some(named_param) = &named_param else {
+                    error!("Not found name for value: {}", word);
+                    return Err(DevToolParseError::InvalidToolData);
+                };
+    
+                // Find the field with the matching name
+                let Ok(field) = get_field_by_name(target.as_mut(), named_param) else {
+                    error!("Invalid name: {}", named_param);
+                    return Err(DevToolParseError::InvalidToolData);
+                };
+    
+                // Convert the word into the field's value with registered applyer (FromStr implementations)
+                let mut ok = false;
+                for applyer in self.apply_from_string.iter() {
+                    if applyer(field, &word) {
+                        ok = true;
+                        break;
+                    }
+                }
+                if !ok {
+                    error!("Not found applyer for value: {}", word);
+                    return Err(DevToolParseError::InvalidToolData);
+                }
+            } else {
+                // Find the next field in positional style
+                let Ok(field) = get_field_by_idx(target.as_mut(), idx) else {
+                    error!("Invalid index: {}", idx);
+                    return Err(DevToolParseError::InvalidToolData);
+                };
+    
+                // Convert the word into the field's value with registered applyer (FromStr implementations)
+                let mut ok = false;
+                for applyer in self.apply_from_string.iter() {
+                    if applyer(field, &word) {
+                        ok = true;
+                        break;
+                    }
+                }
+                if !ok {
+                    error!("Not found applyer for value: {}", word);
+                    return Err(DevToolParseError::InvalidToolData);
+                }
+    
+                // Increment the index of the next positional style parameter
+                idx += 1;
+            }
+        }
+    }
+    Ok(())
+}
+
+struct CLIDemo {
+    /// Functions to convert strings into field values and set field by converted value
+    /// Return true if successful, false if not
+    pub apply_from_string: Vec<fn(&mut dyn Reflect, &str) -> bool>,
+    ...
+}
+```
+
+And after creating a `Box<dyn Reflect>` command, we can send it using the function registered in metadata:
+
+```rust
+ (metadata.add_self_to_commands_fn)(&mut commands, reflected_command.as_ref());
+```
+
+Thus, with the proposed API, we can construct a CLI interface efficiently. This interface can be employed to create a developer console akin to those found in Half-Life or Quake. Importantly, rapid prototyping of developer commands becomes feasible as there's no need to manually configure the CLI interface for each command.
+
+MVP implementation of CLI parser can be found at [CLI-Parser](https://github.com/rewin123/bevy_dev_CLI_prototype/tree/main)
+
 ## Implementation strategy
 
 ### What metadata do toolboxes need?
@@ -310,7 +469,7 @@ this MVP should be sufficient to prove out the viability of the core architectur
 We can start simple:
 
 - the type name of the dev tool
-- any doc strings on the dev tool struct
+- any doc strings on the dev tool struct: see the [`Documentation` struct](https://github.com/bevyengine/bevy/blob/e33b93e31230c44d3b269d0c781544872fbd3909/crates/bevy_reflect/bevy_reflect_derive/src/documentation.rs#L43) from `bevy_reflect`
 - the value and types of any configuration that must be supplied
 
 By relying on simple structs to configure both our modal dev tools and commands, we can extract this information automatically, via reflection.
@@ -320,8 +479,6 @@ Additional dev tool specific metadata (such as a classification scheme) can be a
 
 1. Third-party and end user dev tools will be pushed to conform to this standard. Without the use of a toolbox, this is added work for no benefit.
 2. This abstraction may not fit all possible tools and toolboxes. The manual wiring approach is more flexible, and so if our abstraction is overly prescriptive, it may not work correctly.
-3. The `from_str` methods are currently quite heavy on boilerplate. A `clap`-inspired derive macro would be lovely here. Perhaps a crate already exists?
-4. How can we store type-erased `StringConstructorFn`s in our metadata?
 
 ## Rationale and alternatives
 
@@ -379,6 +536,12 @@ Fundamentally, there are two problems with this design:
 
 Instead, we're forced to turn to the dark arts of reflection and type registration.
 
+### Why not configure `ModalDevTools` with `DevCommands`?
+
+While configuring `ModalDevTools` with `DevCommands` makes sense for universal configuration options such as enabling, disabling, and toggling dev tools, it is not ideal for configuring specific properties due to the amount of boilerplate required.
+Instead, toolboxes should use a reflection-based workflow to set fields on the various `ModalDevTool` resources directly.
+Those commands are meant to provide a single interface for toolboxes to work with, and should exist on every `ModalDevTool`.
+
 ## Unresolved questions
 
 1. Are the provided methods (along with those on `Reflect`) sufficient to allow toolkits to populate and run a wide range of dev tools without requiring an additional trait and manual registration?
@@ -400,6 +563,8 @@ Related but out-of-scope questions:
   - in dedicated crates, saving bevy_dev_tools for higher level abstractions?
 - should dev tools be embedded in each application or should testing be done through an editor which controls these dev tools?
   - this is one of the [key questions](https://github.com/bevyengine/bevy_editor_prototypes/discussions/1) for the bevy_editor efforts
+- how should focus and input handling be controlled by the dev tools? For example, a fly camera would disable ordinary game controls.
+  - this is a [complex open question](https://github.com/bevyengine/bevy/issues/3570), and deserves its own independent design work.
 
 Future possibilities:
 
